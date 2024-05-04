@@ -20,7 +20,7 @@ export default function Layout() {
 
   return (
     <div className="max-w-[960px] mx-auto px-3">
-      <header className="flex items-center justify-between gap-4 py-6 pb-3 border-b">
+      <header className="flex flex-wrap items-center justify-center sm:justify-between gap-4 py-6 pb-3 border-b">
         <div className="flex items-center gap-2">
           <Link to="/" className="text-sm font-black">
             JSONPlaceholder Posts
@@ -30,9 +30,9 @@ export default function Layout() {
             <Switch checked={dark} onChange={toggleDarkMode} />
           </div>
         </div>
-        <Button to="/create">Create</Button>
+        <Button to="/create">Create Article</Button>
       </header>
-      <main>
+      <main className="py-3">
         <Outlet />
       </main>
     </div>
