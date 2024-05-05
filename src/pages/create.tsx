@@ -32,7 +32,10 @@ export default function CreateArticle() {
   };
 
   return (
-    <form onSubmit={handleSubmit(submit)} className="grid grid-cols-2 gap-3">
+    <form
+      onSubmit={handleSubmit(submit)}
+      className="grid grid-cols-1 md:grid-cols-2 gap-3 gap-x-0 md:gap-x-3"
+    >
       <div className="col-span-2 flex items-center justify-between gap-4">
         <h1 className="text-xl font-bold">Create Article</h1>
         <Button loading={loading}>Submit</Button>
@@ -43,7 +46,7 @@ export default function CreateArticle() {
         name="author_name"
         label="Author Name"
         placeholder="Enter author name"
-        rootClassName="col-span-1"
+        rootClassName="col-span-full md:col-span-1"
         error={errors["author_name"]}
         onChange={() => clearError("author_name")}
       />
@@ -53,7 +56,7 @@ export default function CreateArticle() {
         name="author_email"
         label="Author Email"
         placeholder="Enter author email"
-        rootClassName="col-span-1"
+        rootClassName="col-span-full md:col-span-1"
         error={errors["author_email"]}
         onChange={() => clearError("author_email")}
       />

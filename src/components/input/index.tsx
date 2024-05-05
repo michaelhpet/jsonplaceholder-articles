@@ -17,7 +17,7 @@ export default function Input(props: Props) {
       {label ? <span className="pb-1 font-semibold">{label}</span> : null}
       <input
         {...domProps}
-        className={`min-h-[33.6px] min-w-[240px] px-3 py-1 bg-black/5 dark:bg-white/5 border rounded-lg focus:outline-blue-700 ${
+        className={`min-w-[210px] min-h-[33.6px] px-3 py-1 bg-black/5 dark:bg-white/5 border rounded-lg focus:outline-blue-700 ${
           error ? "border-red-500 focus:outline-red-500" : ""
         }`}
       />

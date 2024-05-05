@@ -82,7 +82,9 @@ export default function Home() {
       )}
 
       {articles.length && hasMore ? (
-        <Button onClick={() => setPage((p) => ++p)}>Load more</Button>
+        <Button loading={loading} onClick={() => setPage((p) => ++p)}>
+          Load more
+        </Button>
       ) : null}
     </div>
   );

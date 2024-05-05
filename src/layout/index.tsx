@@ -22,7 +22,7 @@ export default function Layout() {
 
   return (
     <LayoutProvider>
-      <div className="max-w-[960px] mx-auto px-6">
+      <div className="max-w-[960px] mx-auto px-4">
         <header className="sticky z-[100] top-0 min-h-[70px] flex flex-wrap items-center justify-between gap-4 py-6 pb-3 border-b bg-white dark:bg-[#242424]">
           <div className="flex items-center gap-2">
             <Link to="/" className="text-sm font-black">
