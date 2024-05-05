@@ -54,7 +54,7 @@ export default function Home() {
     <div className="flex flex-col gap-6">
       <form
         onSubmit={submitSearch}
-        className="flex items-center justify-center gap-1"
+        className="flex flex-wrap items-center justify-center gap-1"
       >
         <Input
           name="search"
