@@ -30,7 +30,7 @@ export default function CreateArticle() {
       notify.success(res.message);
       navigate("/");
     } catch (error) {
-      notify.error("Oops... something went wrong");
+      notify.error("Oops... something went wrong. Please try again");
     } finally {
       setLoading(false);
     }
