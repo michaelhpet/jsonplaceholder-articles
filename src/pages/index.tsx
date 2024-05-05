@@ -5,9 +5,11 @@ import { FormEvent, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import ArticleCard from "@/components/article-card";
 import ArticleCardSkeleton from "@/components/article-card/skeleton";
+import { useNotify } from "@/utils/hooks";
 
 export default function Home() {
   const navigate = useNavigate();
+  const notify = useNotify();
   const [searchParams] = useSearchParams();
   const [loading, setLoading] = useState(false);
   const [articles, setArticles] = useState<ArticleType[]>([]);
@@ -16,26 +18,25 @@ export default function Home() {
   const search = searchParams.get("search") ?? "";
 
   const loadArticles = async () => {
-    try {
-      setLoading(true);
-      if (page === 1) setArticles([]);
-      const params = new URLSearchParams({
-        page: String(page),
-        limit: "12",
-        ...(search ? { search } : {}),
-      }).toString();
-      const res: ArticlesResponse = await (
-        await fetch(`${import.meta.env.VITE_APP_API_URL}/articles?${params}`)
-      ).json();
-      const newArticles =
-        page > 1 ? articles.concat(res.data.articles) : res.data.articles;
-      setArticles(newArticles);
-      setHasMore(res.data.pagination.has_next);
-    } catch (error) {
-      console.log(error);
-    } finally {
+    setLoading(true);
+    if (page === 1) setArticles([]);
+    const params = new URLSearchParams({
+      page: String(page),
+      limit: "12",
+      ...(search ? { search } : {}),
+    }).toString();
+    const res: ArticlesResponse = await (
+      await fetch(`${import.meta.env.VITE_APP_API_URL}/articles?${params}`)
+    ).json();
+    if (["fail", "error"].includes(res.status)) {
       setLoading(false);
+      return notify.error(res.message);
     }
+    const newArticles =
+      page > 1 ? articles.concat(res.data.articles) : res.data.articles;
+    setArticles(newArticles);
+    setHasMore(res.data.pagination.has_next);
+    setLoading(false);
   };
 
   const submitSearch = async (e: FormEvent<HTMLFormElement>) => {

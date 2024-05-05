@@ -15,25 +15,20 @@ export default function CreateArticle() {
   const notify = useNotify();
 
   const submit = async (data: FormData) => {
-    try {
-      setLoading(true);
-      console.log(data);
-      const res: CreateArticleResponse = await (
-        await fetch(`${import.meta.env.VITE_APP_API_URL}/articles`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
-        })
-      ).json();
-      if (["fail", "error"].includes(res.status))
-        return notify.error(res.message);
-      notify.success(res.message);
-      navigate("/");
-    } catch (error) {
-      notify.error("Oops... something went wrong. Please try again");
-    } finally {
-      setLoading(false);
-    }
+    setLoading(true);
+    console.log(data);
+    const res: CreateArticleResponse = await (
+      await fetch(`${import.meta.env.VITE_APP_API_URL}/articles`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      })
+    ).json();
+    setLoading(false);
+    if (["fail", "error"].includes(res.status))
+      return notify.error(res.message);
+    notify.success(res.message);
+    navigate("/");
   };
 
   return (
