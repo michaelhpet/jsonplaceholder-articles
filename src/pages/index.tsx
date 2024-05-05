@@ -1,36 +1,35 @@
 import Button from "@/components/button";
 import Input from "@/components/input";
-import PostCard from "@/components/post-card";
-import PostCardSkeleton from "@/components/post-card/skeleton";
-import { PostType } from "@/utils/types";
+import PostCardSkeleton from "@/components/article-card/skeleton";
+import { ArticleType, ArticlesResponse } from "@/utils/types";
 import { FormEvent, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import ArticleCard from "@/components/article-card";
 
 export default function Home() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [loading, setLoading] = useState(false);
-  const [posts, setPosts] = useState<PostType[]>([]);
+  const [articles, setArticles] = useState<ArticleType[]>([]);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const search = searchParams.get("search") ?? "";
 
-  const loadPosts = async () => {
+  const loadArticles = async () => {
     try {
       setLoading(true);
       const params = new URLSearchParams({
-        _page: String(page),
-        _per_page: "12",
-        _expand: "user",
-        ...(search ? { title_like: search, "user.name": search } : {}),
+        page: String(page),
+        limit: "12",
+        ...(search ? { search } : {}),
       }).toString();
-      const res = await fetch(
-        `https://jsonplaceholder.typicode.com/posts?${params}`
-      );
-      const data = await res.json();
-      const newPosts = page > 1 ? posts.concat(data) : data;
-      setPosts(newPosts);
-      setHasMore(Boolean(data.length));
+      const res: ArticlesResponse = await (
+        await fetch(`${import.meta.env.VITE_APP_API_URL}/articles?${params}`)
+      ).json();
+      const newArticles =
+        page > 1 ? articles.concat(res.data.articles) : res.data.articles;
+      setArticles(newArticles);
+      setHasMore(res.data.pagination.has_next);
     } catch (error) {
       console.log(error);
     } finally {
@@ -41,13 +40,13 @@ export default function Home() {
   const submitSearch = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const search = (e.target as any).search.value;
-    setPosts([]);
+    setArticles([]);
     setPage(1);
     navigate(`/?search=${search}`);
   };
 
   useEffect(() => {
-    loadPosts();
+    loadArticles();
   }, [search, page]);
 
   return (
@@ -64,10 +63,10 @@ export default function Home() {
         <Button type="submit">Search</Button>
       </form>
 
-      {loading || posts.length ? (
+      {loading || articles.length ? (
         <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-3">
-          {posts.map((post) => (
-            <PostCard key={post.id} post={post} />
+          {articles.map((article) => (
+            <ArticleCard key={article.id} article={article} />
           ))}
           {loading
             ? Array(12)
@@ -81,7 +80,7 @@ export default function Home() {
         </div>
       )}
 
-      {posts.length ? (
+      {articles.length ? (
         <Button
           disabled={!hasMore}
           onClick={() => {
