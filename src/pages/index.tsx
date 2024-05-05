@@ -18,7 +18,7 @@ export default function Home() {
   const loadArticles = async () => {
     try {
       setLoading(true);
-      setArticles([]);
+      if (page === 1) setArticles([]);
       const params = new URLSearchParams({
         page: String(page),
         limit: "12",
