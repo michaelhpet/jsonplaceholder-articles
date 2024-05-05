@@ -14,10 +14,10 @@ export default function TextArea(props: Props) {
       htmlFor={domProps.id}
       className={`flex flex-col text-sm font-semibold ${rootClassName}`}
     >
-      {label}
+      {label ? <span className="pb-1">{label}</span> : null}
       <textarea
         {...domProps}
-        className={`text-current p-3 bg-black/5 dark:bg-white/5 border mt-1 rounded-lg focus:outline-blue-700 ${
+        className={`text-current p-3 bg-black/5 dark:bg-white/5 border rounded-lg focus:outline-blue-700 ${
           error ? "border-red-500 focus:outline-red-500" : ""
         }`}
       />

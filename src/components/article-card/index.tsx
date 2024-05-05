@@ -9,7 +9,9 @@ export default function ArticleCard(props: Props) {
     <article className="flex flex-col gap-2 p-3 rounded-lg border">
       <div className="flex flex-col gap-1">
         <p className="font-semibold line-clamp-2">{props.article.title}</p>
-        <p className="text-sm opacity-90">{props.article.body}</p>
+        <p className="text-sm opacity-90 line-clamp-6">
+          {props.article.excerpt}
+        </p>
       </div>
       <p className="text-sm font-medium opacity-90 mt-auto">
         {props.article.author_name}

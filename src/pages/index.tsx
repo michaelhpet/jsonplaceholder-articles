@@ -18,6 +18,7 @@ export default function Home() {
   const loadArticles = async () => {
     try {
       setLoading(true);
+      setArticles([]);
       const params = new URLSearchParams({
         page: String(page),
         limit: "12",
@@ -40,7 +41,6 @@ export default function Home() {
   const submitSearch = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const search = (e.target as any).search.value;
-    setArticles([]);
     setPage(1);
     navigate(`/?search=${search}`);
   };
@@ -80,15 +80,8 @@ export default function Home() {
         </div>
       )}
 
-      {articles.length ? (
-        <Button
-          disabled={!hasMore}
-          onClick={() => {
-            if (hasMore) setPage((p) => ++p);
-          }}
-        >
-          Load more
-        </Button>
+      {articles.length && hasMore ? (
+        <Button onClick={() => setPage((p) => ++p)}>Load more</Button>
       ) : null}
     </div>
   );

@@ -44,7 +44,7 @@ export function useNotify() {
   const Message = (props: { type: NotifyType; message: string }) => {
     return (
       <div
-        className="fixed top-6 left-[50%] translate-x-[-50%] flex items-start gap-3 p-3 rounded-lg bg-white dark:bg-[#242424] shadow-lg animate-[alert_1s_forwards]"
+        className="fixed top-6 left-[50%] translate-x-[-50%] flex items-start gap-3 p-3 rounded-lg bg-white dark:bg-[#242424] shadow-lg animate-[alert_200ms_forwards]"
         onClick={() => setPortal(null)}
       >
         <span

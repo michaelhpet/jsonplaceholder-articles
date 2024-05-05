@@ -14,10 +14,10 @@ export default function Input(props: Props) {
       htmlFor={domProps.id}
       className={`flex flex-col text-sm font-semibold ${rootClassName}`}
     >
-      {label}
+      {label ? <span className="pb-1">{label}</span> : null}
       <input
         {...domProps}
-        className={`min-h-[33.6px] px-3 py-1 bg-black/5 mt-1 dark:bg-white/5 border rounded-lg focus:outline-blue-700 ${
+        className={`min-h-[33.6px] min-w-[240px] px-3 py-1 bg-black/5 dark:bg-white/5 border rounded-lg focus:outline-blue-700 ${
           error ? "border-red-500 focus:outline-red-500" : ""
         }`}
       />
