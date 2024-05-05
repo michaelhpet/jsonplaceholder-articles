@@ -1,3 +1,5 @@
+export type ApiResponseStatus = "success" | "fail" | "error";
+
 export type ArticleType = {
   _id: string;
   title: string;
@@ -20,10 +22,18 @@ export type PaginationType = {
 };
 
 export type ArticlesResponse = {
-  status: "success" | "fail" | "error";
+  status: ApiResponseStatus;
   message: string;
   data: {
     articles: ArticleType[];
     pagination: PaginationType;
   };
 };
+
+export type CreateArticleResponse = {
+  status: ApiResponseStatus;
+  message: string;
+  data: { article: ArticleType } | null;
+};
+
+export type NotifyType = "success" | "error";

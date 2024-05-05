@@ -19,3 +19,12 @@ body.dark {
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
 }
+
+@keyframes alert {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

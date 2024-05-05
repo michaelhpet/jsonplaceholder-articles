@@ -1,26 +1,36 @@
 import Button from "@/components/button";
 import Input from "@/components/input";
 import TextArea from "@/components/textarea";
-import { useForm } from "@/utils/hooks";
-import { ArticleType } from "@/utils/types";
+import { useForm, useNotify } from "@/utils/hooks";
+import { ArticleType, CreateArticleResponse } from "@/utils/types";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 type FormData = Omit<ArticleType, "_id" | "excerpt" | "timestamp">;
 
 export default function CreateArticle() {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const { errors, handleSubmit, clearError } = useForm<FormData>();
+  const { portal, notify } = useNotify();
 
   const submit = async (data: FormData) => {
     try {
       setLoading(true);
-      await fetch(`${import.meta.env.VITE_APP_API_URL}/articles`, {
-        method: "POST",
-        body: JSON.stringify({}),
-      });
-      console.log("data", data);
+      console.log(data);
+      const res: CreateArticleResponse = await (
+        await fetch(`${import.meta.env.VITE_APP_API_URL}/articles`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        })
+      ).json();
+      if (["fail", "error"].includes(res.status))
+        return notify.error(res.message);
+      notify.success(res.message);
+      navigate("/");
     } catch (error) {
-      console.log(error);
+      notify.error("Oops... something went wrong");
     } finally {
       setLoading(false);
     }
@@ -73,6 +83,7 @@ export default function CreateArticle() {
         error={errors["body"]}
         onChange={() => clearError("body")}
       />
+      {portal}
     </form>
   );
 }
