@@ -1,10 +1,10 @@
 import Button from "@/components/button";
 import Input from "@/components/input";
-import PostCardSkeleton from "@/components/article-card/skeleton";
 import { ArticleType, ArticlesResponse } from "@/utils/types";
 import { FormEvent, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import ArticleCard from "@/components/article-card";
+import ArticleCardSkeleton from "@/components/article-card/skeleton";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -66,12 +66,12 @@ export default function Home() {
       {loading || articles.length ? (
         <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-3">
           {articles.map((article) => (
-            <ArticleCard key={article.id} article={article} />
+            <ArticleCard key={article._id} article={article} />
           ))}
           {loading
             ? Array(12)
                 .fill(0)
-                .map((_, i) => <PostCardSkeleton key={i} />)
+                .map((_, i) => <ArticleCardSkeleton key={i} />)
             : null}
         </div>
       ) : (

@@ -1,9 +1,10 @@
 import Button from "@/components/button";
 import Switch from "@/components/switch";
 import { useEffect, useState } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 
 export default function Layout() {
+  const { pathname } = useLocation();
   const [dark, setDark] = useState(
     Boolean(JSON.parse(localStorage.getItem("dark") ?? "false"))
   );
@@ -30,7 +31,7 @@ export default function Layout() {
             <Switch checked={dark} onChange={toggleDarkMode} />
           </div>
         </div>
-        <Button to="/create">Create Article</Button>
+        {pathname === "/" ? <Button to="/create">Create Article</Button> : null}
       </header>
       <main className="py-6">
         <Outlet />
