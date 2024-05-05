@@ -12,9 +12,9 @@ export default function TextArea(props: Props) {
   return (
     <label
       htmlFor={domProps.id}
-      className={`flex flex-col text-sm font-semibold ${rootClassName}`}
+      className={`flex flex-col text-sm ${rootClassName}`}
     >
-      {label ? <span className="pb-1">{label}</span> : null}
+      {label ? <span className="pb-1 font-semibold">{label}</span> : null}
       <textarea
         {...domProps}
         className={`text-current p-3 bg-black/5 dark:bg-white/5 border rounded-lg focus:outline-blue-700 ${

@@ -12,9 +12,9 @@ export default function Input(props: Props) {
   return (
     <label
       htmlFor={domProps.id}
-      className={`flex flex-col text-sm font-semibold ${rootClassName}`}
+      className={`flex flex-col text-sm ${rootClassName}`}
     >
-      {label ? <span className="pb-1">{label}</span> : null}
+      {label ? <span className="pb-1 font-semibold">{label}</span> : null}
       <input
         {...domProps}
         className={`min-h-[33.6px] min-w-[240px] px-3 py-1 bg-black/5 dark:bg-white/5 border rounded-lg focus:outline-blue-700 ${
