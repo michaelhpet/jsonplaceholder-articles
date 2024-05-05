@@ -1,6 +1,7 @@
-import { FormEvent, ReactPortal, useState } from "react";
+import { FormEvent, useState } from "react";
 import { createPortal } from "react-dom";
 import { NotifyType } from "./types";
+import { useLayoutContext } from "@/layout/context";
 
 export function useForm<T extends object>() {
   const [errors, setErrors] = useState({} as Record<keyof T, string>);
@@ -38,12 +39,12 @@ export function useForm<T extends object>() {
 }
 
 export function useNotify() {
-  const [portal, setPortal] = useState<ReactPortal | null>(null);
+  const { setPortal } = useLayoutContext();
 
   const Message = (props: { type: NotifyType; message: string }) => {
     return (
       <div
-        className="fixed top-6 left-[50%] translate-x-[-50%] flex items-start gap-3 p-3 rounded-lg bg-white shadow-lg animate-[alert_1s_forwards]"
+        className="fixed top-6 left-[50%] translate-x-[-50%] flex items-start gap-3 p-3 rounded-lg bg-white dark:bg-[#242424] shadow-lg animate-[alert_1s_forwards]"
         onClick={() => setPortal(null)}
       >
         <span
@@ -55,7 +56,6 @@ export function useNotify() {
         >
           {props.type === "success" ? "7" : "+"}
         </span>
-
         {props.message}
       </div>
     );
@@ -77,5 +77,5 @@ export function useNotify() {
     success: (message: string) => show("success", message),
     error: (message: string) => show("error", message),
   };
-  return { portal, notify };
+  return notify;
 }

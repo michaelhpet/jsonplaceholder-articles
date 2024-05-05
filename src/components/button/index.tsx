@@ -13,7 +13,7 @@ export default function Button(props: Props) {
     <button
       {...domProps}
       disabled={domProps.disabled || loading}
-      className="flex items-center gap-1 px-3 py-1 rounded-lg font-semibold bg-blue-700 focus:outline focus:outline-2 focus:outline-blue-700 outline-offset-2 transition text-white disabled:bg-gray-200 disabled:text-gray-400 dark:disabled:bg-gray-500 disabled:cursor-not-allowed"
+      className="flex items-center justify-center gap-1 px-3 py-1 rounded-lg font-semibold bg-blue-700 focus:outline focus:outline-2 focus:outline-blue-700 outline-offset-2 transition text-white disabled:bg-gray-200 disabled:text-gray-400 dark:disabled:bg-gray-500 disabled:cursor-not-allowed"
     >
       {loading ? (
         <span className="relative w-3 h-3 rounded-full border-[3px] bg-gray-200 dark:bg-gray-500 border-gray-400 animate-spin">

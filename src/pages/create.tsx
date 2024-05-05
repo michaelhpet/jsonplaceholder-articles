@@ -12,7 +12,7 @@ export default function CreateArticle() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const { errors, handleSubmit, clearError } = useForm<FormData>();
-  const { portal, notify } = useNotify();
+  const notify = useNotify();
 
   const submit = async (data: FormData) => {
     try {
@@ -83,7 +83,6 @@ export default function CreateArticle() {
         error={errors["body"]}
         onChange={() => clearError("body")}
       />
-      {portal}
     </form>
   );
 }
