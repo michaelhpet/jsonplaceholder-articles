@@ -23,6 +23,14 @@ export default function Button(props: Props) {
       {props.children}
     </button>
   );
-  if (props.to) return <Link to={props.to}>{element}</Link>;
+  if (props.to)
+    return (
+      <Link
+        to={props.to}
+        {...(props.disabled ? { onClick: (e) => e.preventDefault() } : {})}
+      >
+        {element}
+      </Link>
+    );
   return element;
 }
