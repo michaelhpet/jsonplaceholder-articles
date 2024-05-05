@@ -1,47 +1,78 @@
 import Button from "@/components/button";
 import Input from "@/components/input";
 import TextArea from "@/components/textarea";
+import { useForm } from "@/utils/hooks";
+import { ArticleType } from "@/utils/types";
+import { useState } from "react";
+
+type FormData = Omit<ArticleType, "_id" | "excerpt" | "timestamp">;
 
 export default function CreateArticle() {
+  const [loading, setLoading] = useState(false);
+  const { errors, handleSubmit, clearError } = useForm<FormData>();
+
+  const submit = async (data: FormData) => {
+    try {
+      setLoading(true);
+      await fetch(`${import.meta.env.VITE_APP_API_URL}/articles`, {
+        method: "POST",
+        body: JSON.stringify({}),
+      });
+      console.log("data", data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <form className="grid grid-cols-2 gap-3">
+    <form onSubmit={handleSubmit(submit)} className="grid grid-cols-2 gap-3">
       <div className="col-span-2 flex items-center justify-between gap-4">
         <h1 className="text-xl font-bold">Create Article</h1>
-        <Button>Submit</Button>
+        <Button loading={loading}>Submit</Button>
       </div>
 
-      <div className="col-span-1 flex flex-col gap-1 text-sm font-semibold">
-        <label htmlFor="author_name">Author Name</label>
-        <Input
-          id="author_name"
-          name="author_name"
-          placeholder="Enter author name"
-        />
-      </div>
+      <Input
+        id="author_name"
+        name="author_name"
+        label="Author Name"
+        placeholder="Enter author name"
+        rootClassName="col-span-1"
+        error={errors["author_name"]}
+        onChange={() => clearError("author_name")}
+      />
 
-      <div className="col-span-1 flex flex-col gap-1 text-sm font-semibold">
-        <label htmlFor="author_email">Author Email</label>
-        <Input
-          id="author_email"
-          name="author_email"
-          placeholder="Enter author email"
-        />
-      </div>
+      <Input
+        id="author_email"
+        name="author_email"
+        label="Author Email"
+        placeholder="Enter author email"
+        rootClassName="col-span-1"
+        error={errors["author_email"]}
+        onChange={() => clearError("author_email")}
+      />
 
-      <div className="col-span-2 flex flex-col gap-1 text-sm font-semibold">
-        <label htmlFor="title">Article Title</label>
-        <Input id="title" name="title" placeholder="Enter article title" />
-      </div>
+      <Input
+        id="title"
+        name="title"
+        label="Article Title"
+        placeholder="Enter article title"
+        rootClassName="col-span-2"
+        error={errors["title"]}
+        onChange={() => clearError("title")}
+      />
 
-      <div className="col-span-2 flex flex-col gap-1 text-sm font-semibold">
-        <label htmlFor="body">Article Body</label>
-        <TextArea
-          id="body"
-          name="body"
-          rows={15}
-          placeholder="Enter article body"
-        />
-      </div>
+      <TextArea
+        rows={15}
+        id="body"
+        name="body"
+        label="Article Body"
+        placeholder="Enter article body"
+        rootClassName="col-span-2"
+        error={errors["body"]}
+        onChange={() => clearError("body")}
+      />
     </form>
   );
 }

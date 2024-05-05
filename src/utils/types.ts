@@ -20,7 +20,7 @@ export type PaginationType = {
 };
 
 export type ArticlesResponse = {
-  status: "success" | "fail";
+  status: "success" | "fail" | "error";
   message: string;
   data: {
     articles: ArticleType[];
