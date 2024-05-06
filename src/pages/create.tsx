@@ -37,7 +37,16 @@ export default function CreateArticle() {
       className="grid grid-cols-1 md:grid-cols-2 gap-3 gap-x-0 md:gap-x-3"
     >
       <div className="col-span-2 flex items-center justify-between gap-4">
-        <h1 className="text-xl font-bold">Create Article</h1>
+        <div className="flex items-center gap-2">
+          <Button
+            type="button"
+            variant="outlined"
+            onClick={() => navigate("/")}
+          >
+            Back
+          </Button>
+          <h1 className="text-xl font-bold">Create Article</h1>
+        </div>
         <Button loading={loading}>Submit</Button>
       </div>
 

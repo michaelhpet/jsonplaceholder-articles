@@ -4,16 +4,21 @@ import { Link } from "react-router-dom";
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   to?: string;
   loading?: boolean;
+  variant?: "outlined" | "contained";
 }
 
 export default function Button(props: Props) {
-  const { to, loading, ...domProps } = props;
+  const { to, loading, variant = "contained", ...domProps } = props;
 
   const element = (
     <button
       {...domProps}
       disabled={domProps.disabled || loading}
-      className="flex items-center justify-center gap-1 px-3 py-1 rounded-lg font-semibold bg-blue-700 focus:outline focus:outline-2 focus:outline-blue-700 outline-offset-2 transition text-white disabled:bg-gray-200 disabled:text-gray-400 dark:disabled:bg-gray-500 disabled:cursor-not-allowed"
+      className={`flex items-center justify-center gap-1 px-3 py-1 rounded-lg font-semibold focus:outline focus:outline-2 focus:outline-blue-700 outline-offset-2 transition disabled:bg-gray-200 disabled:text-gray-400 dark:disabled:bg-gray-500 disabled:cursor-not-allowed ${
+        variant === "outlined"
+          ? "border bg-transparent"
+          : "text-white bg-blue-700"
+      }`}
     >
       {loading ? (
         <span className="relative w-3 h-3 rounded-full border-[3px] bg-gray-200 dark:bg-gray-500 border-gray-400 animate-spin">
