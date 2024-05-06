@@ -16,7 +16,6 @@ export default function CreateArticle() {
 
   const submit = async (data: FormData) => {
     setLoading(true);
-    console.log(data);
     const res: CreateArticleResponse = await (
       await fetch(`${import.meta.env.VITE_APP_API_URL}/articles`, {
         method: "POST",
@@ -36,7 +35,7 @@ export default function CreateArticle() {
       onSubmit={handleSubmit(submit)}
       className="grid grid-cols-1 md:grid-cols-2 gap-3 gap-x-0 md:gap-x-3"
     >
-      <div className="col-span-2 flex items-center justify-between gap-4">
+      <div className="col-span-2 flex items-center justify-between gap-4 pb-4">
         <div className="flex items-center gap-2">
           <Button
             type="button"
